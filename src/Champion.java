@@ -1,19 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Champion {
-    private String name;
+public abstract class Champion extends Player {
     private List<Skill> skills;
     private List<Summoner> summoners;
 
     public Champion(String name) {
-        this.name = name;
+        super(name);
         this.skills = new ArrayList<>();
         this.summoners = new ArrayList<>();
     }
 
     public String getName() {
-        return name;
+        return super.getName();
     }
 
     public List<Skill> getSkills() {
@@ -45,7 +44,8 @@ public class Champion {
 
     @Override
     public String toString() {
-        StringBuilder info = new StringBuilder("Champion: " + name + "\n");
+        StringBuilder info = new StringBuilder("Champion: " + getName() + "\n")
+                .append("Role: ").append(displayRole()).append("\n");
         for (Skill skill : skills) {
             info.append("  Skill: ").append(skill.getTitle()).append("  -");
             info.append("  Reference to: ").append(skill.getChampion().getName()).append("\n");

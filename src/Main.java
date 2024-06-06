@@ -1,17 +1,34 @@
+import enums.SummonerRole;
 import java.util.Date;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        Champion champion1 = new Champion("Ahri");
-        Champion champion2 = new Champion("Zed");
-        Champion champion3 = new Champion("Yasuo");
+        DamageDealerChampion champion1 = new DamageDealerChampion("Ahri");
+        DamageDealerChampion champion2 = new DamageDealerChampion("Zed");
+        DamageDealerChampion champion3 = new DamageDealerChampion("Yasuo");
+        TankChampion champion4 = new TankChampion("Leona");
+        SupportChampion champion5 = new SupportChampion("Janna");
+        TankDamageDealerChampion champion6 = new TankDamageDealerChampion("Kayn");
+
+
         Summoner summoner1 = new Summoner("Player1");
         Summoner summoner2 = new Summoner("Player2");
 
+        summoner1.addRole(SummonerRole.PLAYER);
+        summoner1.addRole(SummonerRole.ADMIN);
+
+        summoner2.addRole(SummonerRole.PLAYER);
+        summoner2.addRole(SummonerRole.MODERATOR);
+
         summoner1.addChampion(champion1);
         summoner1.addChampion(champion2);
+        summoner1.addChampion(champion3);
+        summoner1.addChampion(champion6);
         summoner2.addChampion(champion2);
+        summoner2.addChampion(champion4);
+        summoner2.addChampion(champion5);
+
 
         Skill.createSkill(champion1, "Essence Theft");
         Skill.createSkill(champion1, "Orb of Deception");
@@ -31,9 +48,30 @@ public class Main {
         Skill.createSkill(champion3, "Sweeping Blade");
         Skill.createSkill(champion3, "Last Breath");
 
+        Skill.createSkill(champion4, "Sunlight");
+        Skill.createSkill(champion4, "Shield of Daybreak");
+        Skill.createSkill(champion4, "Eclipse");
+        Skill.createSkill(champion4, "Zenith Blade");
+        Skill.createSkill(champion4, "Solar Flare");
+
+        Skill.createSkill(champion5, "Tailwind");
+        Skill.createSkill(champion5, "Zephyr");
+        Skill.createSkill(champion5, "Howling Gale");
+        Skill.createSkill(champion5, "Eye of the Storm");
+        Skill.createSkill(champion5, "Monsoon");
+
+        Skill.createSkill(champion6, "Reaping Slash");
+        Skill.createSkill(champion6, "Blade's Reach");
+        Skill.createSkill(champion6, "Umbral Trespass");
+        Skill.createSkill(champion6, "Darkin");
+        Skill.createSkill(champion6, "The Darkin Scythe");
+
+
         System.out.println(champion1);
         System.out.println(champion2);
         System.out.println(champion3);
+        System.out.println(champion4);
+        System.out.println(champion5);
 
         champion1.removeSkill(champion1.getSkills().get(4));
 

@@ -1,21 +1,44 @@
-
+import enums.SummonerRole;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Summoner {
-    private String name;
+public class Summoner extends Player {
     private List<Champion> champions;
     private Map<String, List<Match>> matchesQualif;
     private Map<Champion, List<MatchWithScore>> championMatches;
+    private EnumSet<SummonerRole> roles;
 
     public Summoner(String name) {
-        this.name = name;
+        super(name);
         this.champions = new ArrayList<>();
         this.matchesQualif = new TreeMap<>();
         this.championMatches = new HashMap<>();
+        this.roles = EnumSet.noneOf(SummonerRole.class);
+    }
+
+    public EnumSet<SummonerRole> getRoles() {
+        return roles;
+    }
+
+    public void addRole(SummonerRole role) {
+        roles.add(role);
+    }
+
+    public void removeRole(SummonerRole role) {
+        roles.remove(role);
+    }
+
+    public boolean hasRole(SummonerRole role) {
+        return roles.contains(role);
+    }
+
+    @Override
+    public String displayRole() {
+        return "Summoner: " + getName() + " - Roles: " + roles;
     }
 
     public void addChampion(Champion champion) {
@@ -63,15 +86,15 @@ public class Summoner {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Summoner{name='").append(name).append("'}\n");
+        StringBuilder sb = new StringBuilder(); sb.append("Summoner{name='").append(getName())
+                .append("', roles=").append(roles).append("}\n");
         sb.append("Champions owned:\n");
         for (Champion champion : champions) {
             sb.append("  ").append(champion.getName()).append("\n");
         }
         sb.append("Matches with scores:\n");
         for (Map.Entry<Champion, List<MatchWithScore>> entry : championMatches.entrySet()) {
-            sb.append("  Champion '").append(entry.getKey().getName()).append("':\n");
+            sb.append("  champions.Champion '").append(entry.getKey().getName()).append("':\n");
             for (MatchWithScore matchWithScore : entry.getValue()) {
                 sb.append("    ").append(matchWithScore).append("\n");
             }
