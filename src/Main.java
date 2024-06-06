@@ -85,6 +85,14 @@ public class Main {
         Match match1 = new Match("Match1", new Date());
         Match match2 = new Match("Match2", new Date());
 
+        for (int i = 1; i <= 10; i++) {
+            Match match = new Match("Match" + i, new Date());
+            summoner1.addMatchWithScore(champion6, match, i);
+        }
+        Summoner bronzeSummoner = summoner1.upgradeIfEligible();
+
+        System.out.println(bronzeSummoner);
+
         summoner1.addMatch(champion1, match1);
         summoner1.addMatch(champion2, match1);
         summoner1.addMatch(champion1, match2);

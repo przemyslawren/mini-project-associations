@@ -12,6 +12,10 @@ public class Summoner extends Player {
     private Map<Champion, List<MatchWithScore>> championMatches;
     private EnumSet<SummonerRole> roles;
 
+    public Map<Champion, List<MatchWithScore>> getChampionMatches() {
+        return championMatches;
+    }
+
     public Summoner(String name) {
         super(name);
         this.champions = new ArrayList<>();
@@ -84,6 +88,26 @@ public class Summoner extends Player {
         return champions;
     }
 
+    public int getTotalMatches() {
+        int totalMatches = 0;
+        for (List<MatchWithScore> matches : championMatches.values()) {
+            totalMatches += matches.size();
+        }
+        return totalMatches;
+    }
+
+    public Summoner upgradeIfEligible() {
+        if (getTotalMatches() >= 10) {
+            AdvancedSummoner advancedSummoner = new AdvancedSummoner(this);
+            for (Champion champion : champions) {
+                champion.removeSummoner(this);
+                champion.addSummoner(advancedSummoner);
+            }
+            return advancedSummoner;
+        }
+        return this;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(); sb.append("Summoner{name='").append(getName())
@@ -94,7 +118,7 @@ public class Summoner extends Player {
         }
         sb.append("Matches with scores:\n");
         for (Map.Entry<Champion, List<MatchWithScore>> entry : championMatches.entrySet()) {
-            sb.append("  champions.Champion '").append(entry.getKey().getName()).append("':\n");
+            sb.append("  Champion '").append(entry.getKey().getName()).append("':\n");
             for (MatchWithScore matchWithScore : entry.getValue()) {
                 sb.append("    ").append(matchWithScore).append("\n");
             }
