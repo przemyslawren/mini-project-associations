@@ -1,3 +1,13 @@
+import static enums.Ranking.BRONZE;
+import static enums.Ranking.CHALLENGER;
+import static enums.Ranking.DIAMOND;
+import static enums.Ranking.GOLD;
+import static enums.Ranking.MASTER;
+import static enums.Ranking.PLATINUM;
+import static enums.Ranking.SILVER;
+import static enums.Ranking.UNRANKED;
+
+import enums.Ranking;
 import enums.SummonerRole;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -11,10 +21,8 @@ public class Summoner extends Player {
     private Map<String, List<Match>> matchesQualif;
     private Map<Champion, List<MatchWithScore>> championMatches;
     private EnumSet<SummonerRole> roles;
-
-    public Map<Champion, List<MatchWithScore>> getChampionMatches() {
-        return championMatches;
-    }
+    private Enum<Ranking> ranking;
+    private boolean hasWonJacket;
 
     public Summoner(String name) {
         super(name);
@@ -22,6 +30,8 @@ public class Summoner extends Player {
         this.matchesQualif = new TreeMap<>();
         this.championMatches = new HashMap<>();
         this.roles = EnumSet.noneOf(SummonerRole.class);
+        this.ranking = UNRANKED;
+        this.hasWonJacket = false;
     }
 
     public EnumSet<SummonerRole> getRoles() {
@@ -78,14 +88,11 @@ public class Summoner extends Player {
             championMatches.put(champion, new ArrayList<>());
         }
         championMatches.get(champion).add(new MatchWithScore(match, score));
+        updateRanking();
     }
 
     public List<MatchWithScore> getMatchesForChampion(Champion champion) {
         return championMatches.getOrDefault(champion, new ArrayList<>());
-    }
-
-    public List<Champion> getChampions() {
-        return champions;
     }
 
     public int getTotalMatches() {
@@ -93,25 +100,66 @@ public class Summoner extends Player {
         for (List<MatchWithScore> matches : championMatches.values()) {
             totalMatches += matches.size();
         }
+
         return totalMatches;
     }
 
-    public Summoner upgradeIfEligible() {
-        if (getTotalMatches() >= 10) {
-            AdvancedSummoner advancedSummoner = new AdvancedSummoner(this);
-            for (Champion champion : champions) {
-                champion.removeSummoner(this);
-                champion.addSummoner(advancedSummoner);
-            }
-            return advancedSummoner;
+    private void updateRanking() {
+        int totalMatches = getTotalMatches();
+        switch (ranking) {
+            case UNRANKED:
+                if (totalMatches >= 10) {
+                    ranking = BRONZE;
+                }
+                break;
+            case BRONZE:
+                if (totalMatches >= 100) {
+                    ranking = SILVER;
+                }
+                break;
+            case SILVER:
+                if (totalMatches >= 200) {
+                    ranking = GOLD;
+                }
+                break;
+            case GOLD:
+                if (totalMatches >= 500) {
+                    ranking = PLATINUM;
+                }
+                break;
+            case PLATINUM:
+                if (totalMatches >= 1000) {
+                    ranking = DIAMOND;
+                }
+                break;
+            case DIAMOND:
+                if (totalMatches >= 2000) {
+                    ranking = MASTER;
+                }
+                break;
+            case MASTER:
+                if (totalMatches >= 5000) {
+                    ranking = Ranking.CHALLENGER;
+                    hasWonJacket = true;
+                }
+            default:
+                break;
         }
-        return this;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(); sb.append("Summoner{name='").append(getName())
-                .append("', roles=").append(roles).append("}\n");
+                .append("', roles=")
+                .append(roles)
+                .append("}\n")
+                .append("Ranking: ")
+                .append(ranking).append("\n");
+
+            if (hasWonJacket) {
+                sb.append("Has won jacket!\n");
+            }
+
         sb.append("Champions owned:\n");
         for (Champion champion : champions) {
             sb.append("  ").append(champion.getName()).append("\n");

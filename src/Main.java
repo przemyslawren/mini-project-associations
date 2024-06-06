@@ -85,14 +85,6 @@ public class Main {
         Match match1 = new Match("Match1", new Date());
         Match match2 = new Match("Match2", new Date());
 
-        for (int i = 1; i <= 10; i++) {
-            Match match = new Match("Match" + i, new Date());
-            summoner1.addMatchWithScore(champion6, match, i);
-        }
-        Summoner bronzeSummoner = summoner1.upgradeIfEligible();
-
-        System.out.println(bronzeSummoner);
-
         summoner1.addMatch(champion1, match1);
         summoner1.addMatch(champion2, match1);
         summoner1.addMatch(champion1, match2);
@@ -120,12 +112,20 @@ public class Main {
         for (Match match : summoner2.findMatchesQualif("Zed")) {
             System.out.println(match);
         }
+
+        for (int i = 1; i <= 10; i++) {
+            Match match = new Match("Match" + i, new Date());
+            summoner1.addMatchWithScore(champion6, match, i);
+        }
+
         System.out.println('\n');
         System.out.println("Summoners after matches:\n");
         System.out.println(summoner1);
         System.out.println(summoner2);
 
-        System.out.println("Matches with scores for summoner1:");
-        summoner1.getMatchesForChampion(champion1).forEach(System.out::println);
+//        System.out.println("Matches for champion Kayn played by summoner1:");
+//        for (MatchWithScore match : summoner1.getMatchesForChampion(champion6)) {
+//            System.out.println(match);
+//        }
     }
 }
