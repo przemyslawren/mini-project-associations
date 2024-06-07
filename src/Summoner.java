@@ -104,6 +104,20 @@ public class Summoner extends Player {
         return totalMatches;
     }
 
+    public void banPlayer(String playerName) {
+        if (!roles.contains(SummonerRole.MODERATOR)) {
+            throw new IllegalStateException("Only moderators can ban players.");
+        }
+        System.out.println(getName() + " banned the player: " + playerName);
+    }
+
+    public void reportBug(String bugDescription) {
+        if (!roles.contains(SummonerRole.TESTER)) {
+            throw new IllegalStateException("Only testers can report bugs.");
+        }
+        System.out.println(getName() + " reported a bug: " + bugDescription);
+    }
+
     private void updateRanking() {
         int totalMatches = getTotalMatches();
         switch (ranking) {

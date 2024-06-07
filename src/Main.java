@@ -23,7 +23,7 @@ public class Main {
         Summoner summoner2 = new Summoner("Player2");
 
         summoner1.addRole(SummonerRole.PLAYER);
-        summoner1.addRole(SummonerRole.ADMIN);
+        summoner1.addRole(SummonerRole.TESTER);
 
         summoner2.addRole(SummonerRole.PLAYER);
         summoner2.addRole(SummonerRole.MODERATOR);
@@ -124,6 +124,11 @@ public class Main {
             Match match = new Match("Match" + i, new Date());
             summoner1.addMatchWithScore(champion6, match, i);
         }
+
+        summoner1.reportBug("The game crashed after the last update");
+        summoner2.banPlayer("Player3");
+
+        summoner1.banPlayer("Player4");
 
         System.out.println('\n');
         System.out.println("Summoners after matches:\n");
