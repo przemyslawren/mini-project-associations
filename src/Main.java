@@ -7,9 +7,9 @@ public class Main {
         DamageDealerChampion champion1 = new DamageDealerChampion("Ahri");
         champion1.setGender(new Female());
         DamageDealerChampion champion2 = new DamageDealerChampion("Zed");
-        champion2.setGender(new Man());
+        champion2.setGender(new Male());
         DamageDealerChampion champion3 = new DamageDealerChampion("Yasuo");
-        champion3.setGender(new Man());
+        champion3.setGender(new Male());
         TankChampion champion4 = new TankChampion("Leona");
         champion4.setGender(new Female());
         SupportChampion champion5 = new SupportChampion("Janna");
@@ -73,12 +73,19 @@ public class Main {
         Skill.createSkill(champion6, "Darkin");
         Skill.createSkill(champion6, "The Darkin Scythe");
 
+        Skill.createSkill(champion7, "Rupture");
+        Skill.createSkill(champion7, "Feral Scream");
+        Skill.createSkill(champion7, "Vorpal Spikes");
+        Skill.createSkill(champion7, "Feast");
+        Skill.createSkill(champion7, "Carnivore");
 
         System.out.println(champion1);
         System.out.println(champion2);
         System.out.println(champion3);
         System.out.println(champion4);
         System.out.println(champion5);
+        System.out.println(champion6);
+        System.out.println(champion7);
 
         champion1.removeSkill(champion1.getSkills().get(4));
 
@@ -125,19 +132,27 @@ public class Main {
             summoner1.addMatchWithScore(champion6, match, i);
         }
 
-        summoner1.reportBug("The game crashed after the last update");
-        summoner2.banPlayer("Player3");
-
-        summoner1.banPlayer("Player4");
+        System.out.println('\n');
+        System.out.println("Matches for champion Kayn played by summoner1:");
+        for (MatchWithScore match : summoner1.getMatchesForChampion(champion6)) {
+            System.out.println(match);
+        }
 
         System.out.println('\n');
         System.out.println("Summoners after matches:\n");
         System.out.println(summoner1);
         System.out.println(summoner2);
 
-//        System.out.println("Matches for champion Kayn played by summoner1:");
-//        for (MatchWithScore match : summoner1.getMatchesForChampion(champion6)) {
-//            System.out.println(match);
-//        }
+        summoner1.reportBug("The game crashed after the last update");
+        summoner2.banPlayer("Player3");
+
+        try {
+            summoner1.banPlayer("Player4");
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
     }
 }
