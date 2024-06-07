@@ -5,11 +5,18 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         DamageDealerChampion champion1 = new DamageDealerChampion("Ahri");
+        champion1.setGender(new Female());
         DamageDealerChampion champion2 = new DamageDealerChampion("Zed");
+        champion2.setGender(new Man());
         DamageDealerChampion champion3 = new DamageDealerChampion("Yasuo");
+        champion3.setGender(new Man());
         TankChampion champion4 = new TankChampion("Leona");
+        champion4.setGender(new Female());
         SupportChampion champion5 = new SupportChampion("Janna");
+        champion5.setGender(new Female());
         TankDamageDealerChampion champion6 = new TankDamageDealerChampion("Kayn");
+        TankDamageDealerChampion champion7 = new TankDamageDealerChampion("Cho'Gath");
+        champion7.setGender(new UnknownGender());
 
 
         Summoner summoner1 = new Summoner("Player1");
